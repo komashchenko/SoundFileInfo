@@ -14,6 +14,7 @@ void cp1251_to_utf8(char* out, const char* in);
 
 
 
+
 bool SoundFileInfo::SDK_OnLoad(char* error, size_t maxlength, bool late)
 {
 	g_htSoundFile = g_pHandleSys->CreateType("SoundFile", &g_SoundFileHandler, 0, NULL, NULL, myself->GetIdentity(), NULL);
