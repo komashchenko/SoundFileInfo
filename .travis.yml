@@ -24,3 +24,14 @@ script:
   - mkdir $TRAVIS_BUILD_DIR/build && cd $TRAVIS_BUILD_DIR/build
   - python ../configure.py --enable-optimize
   - ambuild
+
+before_deploy:
+  - tar -czf SoundFileInfo-${TRAVIS_TAG}-linux.tar.gz -C package/ addons/
+
+deploy:
+  provider: releases
+  api_key: ${GH_DEPLOYTOKEN}
+  file: SoundFileInfo-${TRAVIS_TAG}-linux.tar.gz
+  skip_cleanup: true
+  on:
+tags: true
