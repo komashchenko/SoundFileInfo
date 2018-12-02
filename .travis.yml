@@ -1,0 +1,26 @@
+language: cpp
+compiler:
+  - clang
+
+addons:
+  apt:
+    packages:
+      - g++-multilib
+      - lib32z1-dev
+
+env:
+  global:
+    - SOURCEMOD_VERSION=1.9-dev
+
+install:
+  - git clone https://github.com/alliedmodders/sourcemod.git -b $SOURCEMOD_VERSION --depth 1 --recursive $TRAVIS_BUILD_DIR/../sourcemod
+  - git clone https://github.com/alliedmodders/ambuild.git --depth 1 $TRAVIS_BUILD_DIR/../ambuild
+  - mv $TRAVIS_BUILD_DIR/taglib $TRAVIS_BUILD_DIR/_taglib
+  - git clone https://github.com/taglib/taglib.git --depth 1 $TRAVIS_BUILD_DIR/taglib
+  - mv $TRAVIS_BUILD_DIR/_taglib/taglib/AMBuilder $TRAVIS_BUILD_DIR/taglib/taglib/AMBuilder && > $TRAVIS_BUILD_DIR/taglib/taglib/taglib_config.h
+  - cd $TRAVIS_BUILD_DIR/../ambuild && python setup.py build && sudo python setup.py install
+
+script:
+  - mkdir $TRAVIS_BUILD_DIR/build && cd $TRAVIS_BUILD_DIR/build
+  - python ../configure.py --enable-optimize
+  - ambuild
