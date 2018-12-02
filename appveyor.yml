@@ -8,8 +8,8 @@ install:
   - git clone https://github.com/alliedmodders/sourcemod.git -b %SOURCEMOD_VERSION% --depth 1 --recursive %APPVEYOR_BUILD_FOLDER%\..\sourcemod
   - git clone https://github.com/alliedmodders/ambuild.git --depth 1 %APPVEYOR_BUILD_FOLDER%\..\ambuild
   - move $APPVEYOR_BUILD_FOLDER\taglib $APPVEYOR_BUILD_FOLDER\_taglib
-  - git clone https://github.com/taglib/taglib.git --depth 1 $APPVEYOR_BUILD_FOLDER\taglib
-  - move $APPVEYOR_BUILD_FOLDER\_taglib\taglib\AMBuilder $APPVEYOR_BUILD_FOLDER\taglib\taglib\AMBuilder && type NUL > $APPVEYOR_BUILD_FOLDER\taglib\taglib\taglib_config.h
+  - git clone https://github.com/taglib/taglib.git --depth 1 %APPVEYOR_BUILD_FOLDER%\taglib
+  - move %APPVEYOR_BUILD_FOLDER%\_taglib\taglib\AMBuilder %APPVEYOR_BUILD_FOLDER%\taglib\taglib\AMBuilder && type NUL > %APPVEYOR_BUILD_FOLDER%\taglib\taglib\taglib_config.h
   - cd %APPVEYOR_BUILD_FOLDER%\..\ambuild && python setup.py build && python setup.py install
 
 build_script:
