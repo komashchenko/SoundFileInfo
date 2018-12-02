@@ -1,0 +1,26 @@
+# vim: set sts=2 ts=8 sw=2 tw=99 et ft=python:
+import os
+
+taglib = builder.RunScript('taglib/taglib/AMBuilder')
+
+binary = Extension.Library(builder, 'SoundFileInfo.ext')
+
+binary.sources += [
+  'extension.cpp',
+  os.path.join(Extension.sm_root, 'public', 'smsdk_ext.cpp'),
+]
+
+binary.compiler.includes += [
+  os.path.join(builder.sourcePath, 'taglib', 'taglib'),
+  os.path.join(builder.sourcePath, 'taglib', 'taglib', 'toolkit'),
+  os.path.join(builder.sourcePath, 'taglib', 'taglib', 'mpeg'),
+  os.path.join(builder.sourcePath, 'taglib', 'taglib', 'mpeg', 'id3v2'),
+  os.path.join(builder.sourcePath, 'taglib', 'taglib', 'riff'),
+  os.path.join(builder.sourcePath, 'taglib', 'taglib', 'riff', 'wav'),
+]
+
+binary.compiler.defines += ['TAGLIB_STATIC']
+
+binary.compiler.postlink += [taglib.binary]
+
+Extension.extensions += [builder.Add(binary)]
